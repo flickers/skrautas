@@ -65,12 +65,7 @@ layout: layouts/base.njk
             <ul class="toc">
               {% for item in current.items %}
                 <li>
-                  {% if item.pdf %}
-                    <a href="{{ item.pdf | url }}" download aria-label="Sækja {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}">
-                      <span class="n">{{ item.issue }}</span>
-                      <span class="toc-label">{{ item.issue }}. tölublað{% if item.second %} · önnur útgáfa{% endif %}</span>
-                    </a>
-                  {% elif item.url %}
+                  {% if item.url %}
                     <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" aria-label="Opna {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}, opnast í nýjum glugga">
                       <span class="n">{{ item.issue }}</span>
                       <span class="toc-label">{{ item.issue }}. tölublað{% if item.second %} · önnur útgáfa{% endif %}</span>

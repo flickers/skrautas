@@ -8,6 +8,7 @@ backend:
   base_url: https://sveltia-cms-auth.flickers.workers.dev
   auth_endpoint: auth
 
+# Decap requires a media folder even though issues are links only.
 media_folder: src/pdfs
 public_folder: /pdfs
 site_url: https://flickers.github.io/skrautas
@@ -20,28 +21,29 @@ collections:
   - name: grafarvogsbladid
     label: Grafarvogsblaðið
     label_singular: Ár
+    description: Veldu ár til að bæta við tölublaði.
     folder: src/volumes/grafarvogsbladid
     create: true
     delete: false
     extension: yml
     format: yaml
-    slug: "{{year}}"
-    summary: "{{year}}"
+    identifier_field: year
+    # "year" is a built-in date tag, so the field must be fields.year.
+    slug: "{{fields.year}}"
+    summary: "{{fields.year}}"
     sortable_fields: [year]
     fields: &year_fields
       - label: Ár
         name: year
-        widget: number
-        value_type: int
-        min: 1990
-        max: 2100
+        widget: string
+        pattern: ['^[0-9]{4}$', "Skrifaðu fjögurra stafa ár, til dæmis 2026."]
         hint: Til dæmis 2026. Ef árið er þegar á listanum, opnaðu það í staðinn.
       - label: Tölublöð
         name: issues
         label_singular: Tölublað
         widget: list
         summary: "{{fields.issue}}. tölublað"
-        hint: Bættu við tölublaðinu. Límaðu hlekk eða hladdu inn PDF. Ýttu svo á Publish.
+        hint: Bættu við tölublaðinu, límdu hlekkinn og ýttu á Publish.
         fields:
           - label: Númer
             name: issue
@@ -53,13 +55,7 @@ collections:
           - label: Hlekkur
             name: url
             widget: string
-            required: false
-            hint: Límaðu slóðina á tölublaðið.
-          - label: PDF
-            name: pdf
-            widget: file
-            required: false
-            hint: Hladdu inn PDF ef fólk á að geta sótt skrána.
+            hint: Límaðu slóðina á tölublaðið á Issuu.
           - label: Önnur útgáfa
             name: second
             widget: boolean
@@ -70,26 +66,30 @@ collections:
   - name: arbaejarbladid
     label: Árbæjarblaðið
     label_singular: Ár
+    description: Veldu ár til að bæta við tölublaði.
     folder: src/volumes/arbaejarbladid
     create: true
     delete: false
     extension: yml
     format: yaml
-    slug: "{{year}}"
-    summary: "{{year}}"
+    identifier_field: year
+    slug: "{{fields.year}}"
+    summary: "{{fields.year}}"
     sortable_fields: [year]
     fields: *year_fields
 
   - name: grafarholtsbladid
     label: Grafarholtsblaðið
     label_singular: Ár
+    description: Veldu ár til að bæta við tölublaði.
     folder: src/volumes/grafarholtsbladid
     create: true
     delete: false
     extension: yml
     format: yaml
-    slug: "{{year}}"
-    summary: "{{year}}"
+    identifier_field: year
+    slug: "{{fields.year}}"
+    summary: "{{fields.year}}"
     sortable_fields: [year]
     fields: *year_fields
 

@@ -1,9 +1,5 @@
-{% if item.pdf %}
-<a class="button" href="{{ item.pdf | url }}" download aria-label="Sækja PDF, {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}">{% if compact %}Sækja{% else %}Sækja PDF{% endif %}</a>
-{% endif %}
 {% if item.url %}
-<a class="button{% if item.pdf %} button-quiet{% endif %}" href="{{ item.url }}" target="_blank" rel="noopener noreferrer" aria-label="Opna {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}, opnast í nýjum glugga">{% if compact %}Opna{% else %}Opna tölublað{% endif %}</a>
-{% endif %}
-{% if not item.pdf and not item.url %}
+<a class="button" href="{{ item.url }}" target="_blank" rel="noopener noreferrer" aria-label="Opna {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}, opnast í nýjum glugga">{% if compact %}Opna{% else %}Opna tölublað{% endif %}</a>
+{% else %}
 <span class="missing">Vantar hlekk</span>
 {% endif %}

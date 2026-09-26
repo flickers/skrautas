@@ -26,7 +26,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/admin": "admin" });
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/fonts": "fonts" });
-  eleventyConfig.addPassthroughCopy({ "src/pdfs": "pdfs" });
   eleventyConfig.addPassthroughCopy({ "src/favicon.svg": "favicon.svg" });
   // Decap writes one file per paper per year. Rebuild when those change.
   eleventyConfig.addWatchTarget("./src/volumes/");

@@ -12,7 +12,7 @@ To add an issue:
 2. Choose the paper, for example **Grafarvogsblaðið**.
 3. Open the year, for example **2026**. The newest year is at the bottom of the list.
 4. Click **Add Tölublað**.
-5. Type the issue number and paste the link, or upload a PDF.
+5. Type the issue number and paste the Issuu link.
 6. Click **Publish**.
 
 A new year is **New Ár** inside that paper. Phone and email addresses are under **Sími og netföng**. The short homepage text is under **Texti á forsíðu**. A whole year cannot be deleted from the editor.
@@ -42,7 +42,7 @@ Open `http://localhost:8080`.
 
 Anyone who should publish an issue needs write access to `flickers/skrautas`. Do not turn on open authoring.
 
-A custom domain is set in the Pages settings. The build picks up the site's path on its own. After the domain is connected, change `site_url` and `display_url` in `src/admin/config.yml` to `https://www.skrautas.is`. Change `public_folder` only if newly uploaded PDFs use the wrong path. The pages already adjust.
+A custom domain is set in the Pages settings. The build picks up the site's path on its own. After the domain is connected, change `site_url` and `display_url` in `src/admin/config.yml` to `https://www.skrautas.is`.
 
 ## Content files
 
@@ -52,7 +52,6 @@ A custom domain is set in the Pages settings. The build picks up the site's path
 | Phone and email addresses | `src/_data/site.yml` |
 | Paper names | `src/_data/papers.yml` |
 | Issues, one folder per paper and one file per year | `src/volumes/` |
-| Uploaded PDFs | `src/pdfs/` |
 
 ## Imported archive
 

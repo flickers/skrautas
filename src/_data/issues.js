@@ -32,7 +32,6 @@ function readVolumes(dir, paperFromFolder, issues) {
         issue: Number(item.issue),
         second: isSecondEdition(item),
         url: item.url ? String(item.url).trim() : "",
-        pdf: item.pdf ? String(item.pdf).trim() : "",
       });
     }
   }
