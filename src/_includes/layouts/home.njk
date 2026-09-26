@@ -1,0 +1,93 @@
+---
+layout: layouts/base.njk
+---
+<div class="wrap">
+  <header class="intro">
+    <h1>{{ heading }}</h1>
+    <div class="prose">{{ content | safe }}</div>
+  </header>
+
+  <section class="section" aria-labelledby="latest-heading">
+    <h2 id="latest-heading" class="section-title">Nýjustu tölublöðin</h2>
+    <ul class="plates">
+      {% for paper in papers.items %}
+        {% set paperIssues = issues | forPaper(paper.id) %}
+        {% set latest = paperIssues | latestIssue %}
+        {% if latest %}
+          <li class="plate" data-paper="{{ paper.id }}">
+            <h3 class="plate-name">{{ paper.name }}</h3>
+            <p class="plate-num">{{ latest.issue }}</p>
+            <p class="plate-meta">tölublað · {{ latest.year }}</p>
+            {% if latest.second %}<p class="badge">Önnur útgáfa</p>{% endif %}
+            <div class="plate-foot">
+              <div class="plate-actions">
+                {% set item = latest %}
+                {% set compact = false %}
+                {% include "actions.njk" %}
+              </div>
+              <a class="more" href="{{ ('/' + paper.id + '/') | url }}">Öll tölublöð</a>
+            </div>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="contact" aria-labelledby="contact-heading">
+    <div>
+      <h2 id="contact-heading">{{ site.phoneLabel }}</h2>
+      <a class="phone-large" href="tel:{{ site.phone | telHref }}">{{ site.phone }}</a>
+    </div>
+    <div>
+      <h3>Netföng</h3>
+      <dl class="emails">
+        {% for paper in papers.items %}
+          <div>
+            <dt>{{ paper.name }}</dt>
+            <dd><a href="mailto:{{ site.emails[paper.id] }}">{{ site.emails[paper.id] }}</a></dd>
+          </div>
+        {% endfor %}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="year-heading">
+    <h2 id="year-heading" class="section-title">Nýjasti árgangurinn</h2>
+    <div class="year-board">
+      {% for paper in papers.items %}
+        {% set paperIssues = issues | forPaper(paper.id) %}
+        {% set groups = paperIssues | groupByYear %}
+        {% if groups | length %}
+          {% set current = groups[0] %}
+          <section data-paper="{{ paper.id }}">
+            <h3><a href="{{ ('/' + paper.id + '/') | url }}">{{ paper.name }}</a></h3>
+            <p class="eyebrow">{{ current.year }}</p>
+            <ul class="toc">
+              {% for item in current.items %}
+                <li>
+                  {% if item.pdf %}
+                    <a href="{{ item.pdf | url }}" download aria-label="Sækja {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}">
+                      <span class="n">{{ item.issue }}</span>
+                      <span class="toc-label">{{ item.issue }}. tölublað{% if item.second %} · önnur útgáfa{% endif %}</span>
+                    </a>
+                  {% elif item.url %}
+                    <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" aria-label="Opna {{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %}, önnur útgáfa{% endif %}, opnast í nýjum glugga">
+                      <span class="n">{{ item.issue }}</span>
+                      <span class="toc-label">{{ item.issue }}. tölublað{% if item.second %} · önnur útgáfa{% endif %}</span>
+                    </a>
+                  {% else %}
+                    <span class="toc-static">
+                      <span class="n">{{ item.issue }}</span>
+                      <span class="toc-label">{{ item.issue }}. tölublað</span>
+                    </span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+            <a class="more" href="{{ ('/' + paper.id + '/') | url }}">Eldri tölublöð</a>
+          </section>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</div>

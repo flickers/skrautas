@@ -1,0 +1,28 @@
+<a class="skip" href="#main">Fara í efni</a>
+<header class="site-header" id="top">
+  <div class="rule"></div>
+  <div class="wrap masthead">
+    <a class="brand" href="{{ '/' | url }}">
+      <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+        <rect x="1" y="8" width="24" height="28" fill="#f4f0e6"/>
+        <rect x="9" y="4" width="28" height="28" fill="#a32d24"/>
+        <path d="M15 13h16M15 18h16M15 23h10" fill="none" stroke="#f4f0e6" stroke-width="1.6" stroke-linecap="square"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">Skrautás</span>
+        <span class="brand-tag">{{ site.tagline }}</span>
+      </span>
+    </a>
+    <a class="header-phone" href="tel:{{ site.phone | telHref }}">
+      <span class="label">{{ site.phoneLabel }}</span>
+      <span class="number">{{ site.phone }}</span>
+    </a>
+  </div>
+  <nav class="wrap mainnav" aria-label="Aðalvalmynd">
+    <a href="{{ '/' | url }}"{% if page.url == ('/' | url) %} aria-current="page"{% endif %}>Forsíða</a>
+    {% for item in papers.items %}
+      {% set itemUrl = ('/' + item.id + '/') | url %}
+      <a href="{{ itemUrl }}"{% if page.url == itemUrl %} aria-current="page"{% endif %}>{{ item.name }}</a>
+    {% endfor %}
+  </nav>
+</header>

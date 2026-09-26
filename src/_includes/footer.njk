@@ -1,0 +1,16 @@
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-name">{{ site.name }}</p>
+      <p>{{ site.tagline }}</p>
+    </div>
+    <div>
+      <p>{{ site.phoneLabel }}</p>
+      <a class="footer-phone" href="tel:{{ site.phone | telHref }}">{{ site.phone }}</a>
+    </div>
+    <p><a href="#top">Efst á síðu</a></p>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>© {{ buildYear }} {{ site.name }}</p>
+  </div>
+</footer>

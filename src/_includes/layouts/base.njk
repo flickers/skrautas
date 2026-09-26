@@ -1,0 +1,32 @@
+{% if paper %}
+  {% set pageTitle = paper.name ~ " — Skrautás" %}
+  {% set pageDescription = paper.name ~ ". Tölublöð útgefin af Skrautás ehf." %}
+{% else %}
+  {% set pageTitle = title %}
+  {% set pageDescription = description %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDescription }}">
+<meta name="theme-color" content="#141210">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ pageDescription }}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="is_IS">
+<link rel="icon" href="{{ '/favicon.svg' | url }}" type="image/svg+xml">
+<link rel="preload" href="{{ '/fonts/newsreader.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ '/fonts/source-sans-3.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ '/css/styles.css' | url }}">
+</head>
+<body>
+{% include "header.njk" %}
+<main id="main" tabindex="-1">
+{{ content | safe }}
+</main>
+{% include "footer.njk" %}
+</body>
+</html>

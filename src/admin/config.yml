@@ -1,0 +1,127 @@
+# Login is served by the Cloudflare Worker. The public site does not call it.
+# The people who publish issues only see the three papers, the phone, and the homepage text.
+
+backend:
+  name: github
+  repo: flickers/skrautas
+  branch: main
+  base_url: https://sveltia-cms-auth.flickers.workers.dev
+  auth_endpoint: auth
+
+media_folder: src/pdfs
+public_folder: /pdfs
+site_url: https://flickers.github.io/skrautas
+display_url: https://flickers.github.io/skrautas
+
+editor:
+  preview: false
+
+collections:
+  - name: grafarvogsbladid
+    label: Grafarvogsblaðið
+    label_singular: Ár
+    folder: src/volumes/grafarvogsbladid
+    create: true
+    delete: false
+    extension: yml
+    format: yaml
+    slug: "{{year}}"
+    summary: "{{year}}"
+    sortable_fields: [year]
+    fields: &year_fields
+      - label: Ár
+        name: year
+        widget: number
+        value_type: int
+        min: 1990
+        max: 2100
+        hint: Til dæmis 2026. Ef árið er þegar á listanum, opnaðu það í staðinn.
+      - label: Tölublöð
+        name: issues
+        label_singular: Tölublað
+        widget: list
+        summary: "{{fields.issue}}. tölublað"
+        hint: Bættu við tölublaðinu. Límaðu hlekk eða hladdu inn PDF. Ýttu svo á Publish.
+        fields:
+          - label: Númer
+            name: issue
+            widget: number
+            value_type: int
+            min: 1
+            max: 40
+            hint: Númer tölublaðsins, til dæmis 9.
+          - label: Hlekkur
+            name: url
+            widget: string
+            required: false
+            hint: Límaðu slóðina á tölublaðið.
+          - label: PDF
+            name: pdf
+            widget: file
+            required: false
+            hint: Hladdu inn PDF ef fólk á að geta sótt skrána.
+          - label: Önnur útgáfa
+            name: second
+            widget: boolean
+            default: false
+            required: false
+            hint: Hakaðu aðeins við ef sama númer er gefið út aftur.
+
+  - name: arbaejarbladid
+    label: Árbæjarblaðið
+    label_singular: Ár
+    folder: src/volumes/arbaejarbladid
+    create: true
+    delete: false
+    extension: yml
+    format: yaml
+    slug: "{{year}}"
+    summary: "{{year}}"
+    sortable_fields: [year]
+    fields: *year_fields
+
+  - name: grafarholtsbladid
+    label: Grafarholtsblaðið
+    label_singular: Ár
+    folder: src/volumes/grafarholtsbladid
+    create: true
+    delete: false
+    extension: yml
+    format: yaml
+    slug: "{{year}}"
+    summary: "{{year}}"
+    sortable_fields: [year]
+    fields: *year_fields
+
+  - name: contact
+    label: Sími og netföng
+    files:
+      - label: Sími og netföng
+        name: contact
+        file: src/_data/site.yml
+        fields:
+          - { label: Nafn, name: name, widget: hidden, default: "Skrautás ehf." }
+          - { label: Lína undir nafni, name: tagline, widget: hidden, default: "Grafarvogsblaðið, Árbæjarblaðið og Grafarholtsblaðið" }
+          - { label: Texti við símann, name: phoneLabel, widget: hidden, default: "Ritstjórn og auglýsingar" }
+          - { label: Sími, name: phone, widget: string, hint: "Til dæmis 698 2844." }
+          - label: Netföng
+            name: emails
+            widget: object
+            fields:
+              - { label: Grafarvogsblaðið, name: grafarvogsbladid, widget: string }
+              - { label: Árbæjarblaðið, name: arbaejarbladid, widget: string }
+              - { label: Grafarholtsblaðið, name: grafarholtsbladid, widget: string }
+
+  - name: home
+    label: Texti á forsíðu
+    files:
+      - label: Texti á forsíðu
+        name: home
+        file: src/content/home.md
+        fields:
+          - { label: Titill, name: title, widget: hidden, default: "Skrautás — Grafarvogsblaðið, Árbæjarblaðið og Grafarholtsblaðið" }
+          - { label: Lýsing, name: description, widget: hidden, default: "Grafarvogsblaðið, Árbæjarblaðið og Grafarholtsblaðið. Útgefandi Skrautás ehf." }
+          - { label: Fyrirsögn, name: heading, widget: string }
+          - { label: Texti, name: body, widget: markdown }
+          - { label: Layout, name: layout, widget: hidden, default: layouts/home.njk }
+          - { label: Permalink, name: permalink, widget: hidden, default: index.html }

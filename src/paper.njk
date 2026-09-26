@@ -1,0 +1,61 @@
+---
+pagination:
+  data: papers.items
+  size: 1
+  alias: paper
+permalink: "/{{ paper.id }}/index.html"
+layout: layouts/base.njk
+---
+{% set paperIssues = issues | forPaper(paper.id) %}
+{% set groups = paperIssues | groupByYear %}
+{% set count = paperIssues | length %}
+<article class="archive" data-paper="{{ paper.id }}">
+  <header class="paper-head wrap">
+    <p class="eyebrow">{{ site.name }}</p>
+    <h1>{{ paper.name }}</h1>
+    <p class="paper-contact">Netfang <a href="mailto:{{ site.emails[paper.id] }}">{{ site.emails[paper.id] }}</a></p>
+    {% if count == 1 %}
+      <p class="paper-meta">1 tölublað frá {{ paperIssues[0].year }}</p>
+    {% elif count > 1 %}
+      <p class="paper-meta">{{ count }} tölublöð frá {{ paperIssues[0].year }}</p>
+    {% endif %}
+  </header>
+
+  {% if groups | length %}
+    <nav class="year-nav" aria-label="Árgangar">
+      <div class="wrap years">
+        {% for group in groups %}
+          <a href="#y-{{ group.year }}">{{ group.year }}</a>
+        {% endfor %}
+      </div>
+    </nav>
+
+    <div class="wrap archive-body">
+      {% for group in groups %}
+        {% set n = group.items | length %}
+        <section class="year-block" id="y-{{ group.year }}" aria-labelledby="h-{{ group.year }}">
+          <div class="year-head">
+            <h2 id="h-{{ group.year }}">{{ group.year }}</h2>
+            <p class="year-count">{% if n == 1 %}1 tölublað{% else %}{{ n }} tölublöð{% endif %}</p>
+          </div>
+          <ul class="issue-list">
+            {% for item in group.items %}
+              <li class="issue-row">
+                <span class="issue-num">{{ item.issue }}</span>
+                <span class="issue-title">{{ paper.name }} {{ item.issue }}. tbl. {{ item.year }}{% if item.second %} <span class="badge">Önnur útgáfa</span>{% endif %}</span>
+                <span class="issue-actions">
+                  {% set compact = true %}
+                  {% include "actions.njk" %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="wrap archive-body">
+      <p>Engin tölublöð hafa verið skráð.</p>
+    </div>
+  {% endif %}
+</article>
